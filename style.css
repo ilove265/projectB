@@ -1,0 +1,203 @@
+/* Reset & Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', Arial, sans-serif; /* Font chữ hiện đại hơn */
+  background: linear-gradient(135deg, #e0f7fa, #e1bee7);
+  min-height: 100vh;
+  color: #333;
+  padding-top: 80px; /* Tránh nội dung bị Header che */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Header Styles */
+.header.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  background: rgba(0, 188, 212, 0.95);
+  color: #fff;
+  padding: 0 40px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+}
+
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.header.bar img {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid white;
+}
+
+.header.bar h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.header.bar .acc {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 8px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.header.bar .acc:hover {
+  background: #fff;
+  color: #00bcd4;
+}
+
+/* Title Section */
+.title-section {
+  text-align: center;
+  margin: 30px 0 40px;
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+.title-section h1 {
+  font-size: 2.5rem;
+  color: #008394;
+  margin-bottom: 10px;
+}
+
+.title-section p {
+  color: #666;
+  font-size: 1.1rem;
+}
+
+/* Container (Thay thế .box cũ) */
+.container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap; /* Cho phép xuống dòng */
+  gap: 30px;
+  width: 90%;
+  max-width: 1200px;
+  padding-bottom: 50px;
+}
+
+/* Activity Card Styles (Dùng chung cho tất cả) */
+.activity-card {
+  background: #ffffff;
+  width: 260px; /* Chiều rộng cố định để đều nhau */
+  height: 350px;
+  border-radius: 20px;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between; /* Đẩy nút xuống dưới cùng */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s, border 0.3s;
+  border: 2px solid transparent;
+  text-align: center;
+}
+
+.activity-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 188, 212, 0.2);
+  border: 2px solid #00bcd4;
+}
+
+/* Icon Area inside Card */
+.card-icon {
+  width: 80px;
+  height: 80px;
+  background: #e0f7fa;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.card-icon img {
+  width: 45px;
+  height: 45px;
+  object-fit: contain;
+}
+
+/* Text Content inside Card */
+.card-content h2 {
+  font-size: 1.4rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.card-content p {
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.4;
+  margin-bottom: 15px;
+  /* Giới hạn số dòng hiển thị nếu text quá dài */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Button Styles */
+.activity-card button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  background: #00bcd4;
+  color: #fff;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.activity-card:hover button {
+  background: #0097a7;
+}
+
+.activity-card button:active {
+  transform: scale(0.95);
+}
+
+/* Animation nhẹ */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive cho màn hình điện thoại */
+@media (max-width: 600px) {
+  .container {
+      width: 100%;
+  }
+  .activity-card {
+      width: 85%; /* Card to hơn trên mobile */
+      height: auto;
+      min-height: 300px;
+  }
+  .header.bar h1 {
+      font-size: 1.2rem;
+  }
+}

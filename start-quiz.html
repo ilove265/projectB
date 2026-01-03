@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./quiz.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <title id="page-title-display">Bắt đầu Quiz</title>
+    <style>
+        /* CSS cho Layout 2 Cột */
+        body {
+            padding-top: 70px; 
+            background: #f4f7f9;
+        }
+        
+        .back-home-minimal {
+            margin-left: 20px;
+            margin-bottom: 10px; /* Thêm khoảng cách */
+        }
+    
+        #quiz-two-column-layout {
+            display: flex;
+            width: 95%;
+            max-width: 1400px;
+            margin: 20px auto;
+            align-items: flex-start;
+            gap: 20px;
+        }
+    
+        /* Vùng nội dung chính (Câu hỏi) */
+        #main-quiz-content {
+            flex-grow: 1; 
+            width: calc(100% - 320px); 
+            background: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+    
+        /* Sidebar Danh sách Câu hỏi (Cố định) */
+        #question-list-sidebar {
+            position: sticky; 
+            top: 90px; 
+            width: 300px;
+            height: calc(100vh - 110px); 
+            overflow-y: auto; 
+            background: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+    
+        #question-list-sidebar h2 {
+            font-size: 1.2rem;
+            color: #00bcd4;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+        
+        /* Styles cho các nút câu hỏi */
+        .question-buttons-group {
+            margin-bottom: 20px;
+            display: flex; /* Dùng flex để dễ căn chỉnh nhóm */
+            flex-wrap: wrap;
+            gap: 8px; /* Khoảng cách giữa các nút */
+        }
+    
+        .question-button {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            background: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+            color: #555;
+            text-decoration: none;
+        }
+    
+        .question-button:hover {
+            background: #e0f7fa;
+            border-color: #00bcd4;
+        }
+    
+        .question-button.answered {
+            background: #c8e6c9; 
+            color: #388e3c;
+            border-color: #4caf50;
+        }
+        .question-button.active {
+            background: #00bcd4;
+            color: white;
+            border-color: #008394;
+            transform: scale(1.05);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        /* Styles khi nộp bài */
+        .question-button.correct {
+            background: #4caf50; 
+            color: white;
+            border-color: #388e3c;
+        }
+        .question-button.wrong {
+            background: #f44336; 
+            color: white;
+            border-color: #d32f2f;
+        }
+    
+        /* Styles chung cho Quiz */
+        .quiz-header {
+            margin-bottom: 15px;
+        }
+    
+        /* Vùng chứa Tiêu đề và Nút Submit */
+        #quiz-header-top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 10px;
+        }
+    
+        .quiz-header h1 {
+            font-size: 2rem;
+            color: #008394;
+            margin: 0;
+            padding: 0;
+        }
+        .info-label {
+            font-weight: 600;
+            color: #999;
+            font-size: 0.9rem;
+        }
+        
+        /* Submit Button (Top) */
+        #submit-button-area button {
+            padding: 10px 20px;
+            background: #ff9800; /* Màu cam nổi bật hơn cho nút nộp bài */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        #submit-button-area button:hover:not(:disabled) {
+            background: #f57c00;
+        }
+        #submit-button-area button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+    
+        /* Questions Area */
+        .question-item {
+            margin-bottom: 30px;
+            padding: 15px;
+            border-left: 5px solid #00bcd4;
+            background: #fafafa;
+            border-radius: 5px;
+        }
+        .question-item h3 {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        .option-label {
+            display: block;
+            padding: 12px;
+            margin-bottom: 8px;
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.95rem;
+        }
+        .option-label:hover {
+            background: #f0f8ff;
+            border-color: #00bcd4;
+        }
+        .option-label input[type="radio"] {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+        
+        /* Styles sau khi nộp bài */
+        .correct-answer-feedback {
+            background: #e8f5e9 !important; 
+            border-color: #4caf50 !important;
+            font-weight: 600;
+            color: #388e3c !important;
+        }
+        .wrong-answer-feedback {
+            background: #ffebee !important; 
+            border-color: #f44336 !important;
+            font-weight: 600;
+            color: #d32f2f !important;
+        }
+        .result-box {
+            text-align: center;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            background: #fff3e0;
+            border: 2px dashed #ff9800;
+        }
+    
+        /* Submit Button (Bottom) - Dùng để giữ form structure, sẽ được ẩn đi */
+        #submit-quiz-btn {
+            display: none !important;
+        }
+    
+        /* Responsive cho màn hình nhỏ */
+        @media (max-width: 1000px) {
+            #quiz-two-column-layout {
+                flex-direction: column;
+                gap: 10px;
+            }
+            #main-quiz-content {
+                width: 100%; 
+                order: 1; 
+                padding: 20px;
+            }
+            #question-list-sidebar {
+                position: static; 
+                width: 100%;
+                height: auto;
+                order: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header bar">
+        <div class="logo-area" onclick="window.location.href='../index.html'" style="cursor: pointer;">
+            <img src="./img/Rei.webp" alt="logo" onerror="this.src='https://placehold.co/40x40'"> 
+            <h1>QuizzLab</h1>
+        </div>
+        <div class="acc">
+            <p>Tài khoản</p>
+        </div>
+    </div>
+    
+    <button class="back-home-minimal" onclick="window.location.href='./index.html'">
+        &larr; Quay lại Quiz
+    </button>
+
+    <div id="quiz-two-column-layout">
+        
+        <div id="main-quiz-content">
+            
+            <div class="quiz-header">
+                <div id="quiz-header-top-row">
+                    <h1 id="quiz-title-display">Đang tải Quiz...</h1>
+                    <div id="submit-button-area">
+                        </div>
+                </div>
+                
+                <p><span class="info-label">Chủ đề:</span> <span id="quiz-topic-display"></span></p>
+                <p><span class="info-label">Số câu:</span> <span id="quiz-count-display"></span></p>
+            </div>
+            <hr style="margin: 20px 0;">
+            
+            <div id="result-display" style="display: none; margin-bottom: 20px;"></div>
+
+            <form id="quiz-form">
+                <div id="questions-area">
+                    <p id="loading-message">Vui lòng chờ...</p>
+                </div>
+
+                <button type="submit" id="submit-quiz-btn" disabled>HOÀN THÀNH BÀI LÀM</button>
+            </form>
+
+        </div>
+
+        <div id="question-list-sidebar">
+            <h2>Danh sách Câu hỏi</h2>
+            <div id="question-button-list">
+                </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+    <script src="start-quiz.js"></script>
+</body>
+</html>
